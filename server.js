@@ -23,7 +23,8 @@ connectDB();
 
 // --- CORS Middleware ---
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: ['https://gadget-review-y7lm.vercel.app',
+      'http://localhost:5173'],
     credentials: true,
 }));
 
