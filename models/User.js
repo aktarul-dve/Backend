@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
     photo: { type: String },
 
     // নতুন ফিল্ড
-    balance: { type: Number, default: 50 }, // প্রাথমিক টাকা
+    balance: { type: Number, default: 5000 }, // প্রাথমিক টাকা
     referCode: { type: String, unique: true }, // ইউনিক রেফার কোড
 }, { timestamps: true });
 

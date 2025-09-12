@@ -6,6 +6,12 @@ const session = require('express-session');
 const passport = require('passport');
 const googleStrategy = require("passport-google-oauth20").Strategy;
 const authRoutes = require("./routers/googleAouthLogin"); 
+const QuestionRoutes = require("./routers/QuestionRoute"); 
+const balance = require ("./routers/balancAddRoute") 
+const watchAds = require ("./routers/watchAdsRoute") 
+const BanglaQuiz = require ("./routers/BanglaQuizRoute") 
+const MathQuiz = require ("./routers/MathQuizRoute") 
+const EnglishQuiz = require ("./routers/EnglishQuizRoute") 
 const User = require("./models/User");
 const connectDB = require ('./config/db');
 
@@ -103,10 +109,14 @@ passport.deserializeUser(async (id, done) => {
 
 // Routes
 app.use("/auth", authRoutes);
+app.use("/", QuestionRoutes );
+app.use("/reward", balance );
+app.use("/ads", watchAds );
+app.use("/bangla", BanglaQuiz);
+app.use("/english", EnglishQuiz);
+app.use("/math", MathQuiz);
 
-app.get("/", (req, res) => {
-    res.send("Hello World");
-});
+
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);

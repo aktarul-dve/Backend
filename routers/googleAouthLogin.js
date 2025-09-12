@@ -1,6 +1,7 @@
 const express = require("express");
 const passport = require("passport");
 const jwt = require('jsonwebtoken');
+const authMiddleware = require("../middleware/auth");
 
 
 const router = express.Router();
@@ -55,6 +56,19 @@ router.get("/logout", (req, res) => {
         }
         res.redirect("http://localhost:5173");
     });
+});
+
+
+// Profile API
+router.get("/profile", authMiddleware, (req, res) => {
+  res.json({
+    id: req.user._id,
+    name: req.user.name,
+    email: req.user.email,
+    photo: req.user.photo,
+    balance: req.user.balance,
+    referCode: req.user.referCode,
+  });
 });
 
 module.exports = router;
