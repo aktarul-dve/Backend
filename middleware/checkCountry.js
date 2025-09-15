@@ -3,7 +3,8 @@ const fetch = require("node-fetch");
 const checkCountry = async (req, res, next) => {
   try {
     // ইউজারের IP নেওয়া
-    const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
+    let ip = req.headers["x-forwarded-for"]?.split(",")[0].trim() || req.socket.remoteAddress;
+
 
     // ipapi থেকে country ফেচ করা
     const response = await fetch(`https://ipapi.co/${ip}/json/`);
