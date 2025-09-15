@@ -12,7 +12,7 @@ const watchAds = require ("./routers/watchAdsRoute")
 const BanglaQuiz = require ("./routers/BanglaQuizRoute") 
 const MathQuiz = require ("./routers/MathQuizRoute") 
 const EnglishQuiz = require ("./routers/EnglishQuizRoute") 
-const withdrawRoutes = require("./routes/withdrawRoutes");
+const withdrawRoutes = require ("./routers/withdrawRoutes")
 const User = require("./models/User");
 const connectDB = require ('./config/db');
 
