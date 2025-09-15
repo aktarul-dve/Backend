@@ -1,5 +1,5 @@
 const express = require("express");
-const checkCountry = require("../middlewares/checkCountry");
+const checkCountry = require("../middleware/checkCountry");
 
 const router = express.Router();
 
