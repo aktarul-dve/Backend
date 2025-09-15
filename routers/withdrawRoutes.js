@@ -8,20 +8,29 @@ const authMiddleware = require("../middleware/auth");
 router.post("/", authMiddleware, async (req, res) => {
   try {
     const { method, phone, amount } = req.body;
-    const user = await User.findById(req.user.id);
 
+    // Frontend থেকে আসা amount number type এ convert করা
+    const requestedAmount = Number(amount);
+    if (isNaN(requestedAmount) || requestedAmount <= 0) {
+      return res.status(400).json({ message: "Invalid amount" });
+    }
+
+    const user = await User.findById(req.user.id);
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    // Check balance
-    if (amount > user.balance) {
+    // amount কে cents/paisa এ convert করা (যেমন 30 টাকা = 3000 পয়সা)
+    const withdrawAmount = requestedAmount * 100;
+
+    // Balance check
+    if (withdrawAmount > user.balance) {
       return res.status(400).json({ message: "Balance not enough" });
     }
 
     // মিনিমাম চেক
-    if (method === "mobile" && amount < 20) {
+    if (method === "mobile" && requestedAmount < 20) {
       return res.status(400).json({ message: "Mobile recharge min 20 tk" });
     }
-    if (method === "bkash" && amount < 300) {
+    if (method === "bkash" && requestedAmount < 300) {
       return res.status(400).json({ message: "Bkash transfer min 300 tk" });
     }
 
@@ -30,13 +39,13 @@ router.post("/", authMiddleware, async (req, res) => {
       user: user._id,
       method,
       phone,
-      amount,
+      amount: withdrawAmount, // এখন সঠিক unit save হচ্ছে
     });
 
     await withdraw.save();
 
     // ইউজারের balance থেকে টাকা কেটে নেওয়া
-    user.balance -= amount;
+    user.balance -= withdrawAmount;
     await user.save();
 
     res.json({ message: "Withdraw request submitted", withdraw });
