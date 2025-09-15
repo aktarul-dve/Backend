@@ -12,6 +12,7 @@ const watchAds = require ("./routers/watchAdsRoute")
 const BanglaQuiz = require ("./routers/BanglaQuizRoute") 
 const MathQuiz = require ("./routers/MathQuizRoute") 
 const EnglishQuiz = require ("./routers/EnglishQuizRoute") 
+const withdrawRoutes = require("./routes/withdrawRoutes");
 const User = require("./models/User");
 const connectDB = require ('./config/db');
 
@@ -116,6 +117,9 @@ app.use("/ads", watchAds );
 app.use("/bangla", BanglaQuiz);
 app.use("/english", EnglishQuiz);
 app.use("/math", MathQuiz);
+
+//withdraw
+app.use("/withdraw", withdrawRoutes);
 
 
 
