@@ -13,6 +13,7 @@ const BanglaQuiz = require ("./routers/BanglaQuizRoute")
 const MathQuiz = require ("./routers/MathQuizRoute") 
 const EnglishQuiz = require ("./routers/EnglishQuizRoute") 
 const withdrawRoutes = require ("./routers/withdrawRoutes")
+const jobRoutes = require("./routers/jobRoutes");
 const User = require("./models/User");
 const connectDB = require ('./config/db');
 
@@ -120,6 +121,8 @@ app.use("/math", MathQuiz);
 
 //withdraw
 app.use("/withdraw", withdrawRoutes);
+
+app.use("/api/job", jobRoutes);
 
 
 
