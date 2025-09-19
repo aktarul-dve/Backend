@@ -25,7 +25,7 @@ connectDB();
 
 // --- CORS Middleware ---
 app.use(cors({
-    origin: ['https://gadget-review-y7lm.vercel.app',
+    origin: ['https://www.adcashbd.xyz',
       'http://localhost:5173'],
     credentials: true,
 }));
