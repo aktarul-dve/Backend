@@ -17,7 +17,7 @@ router.get("/google",
 // Callback
 router.get("/google/callback",
     passport.authenticate("google", {
-        failureRedirect: "https://gadget-review-y7lm.vercel.app",
+        failureRedirect: "https://www.adcashbd.xyz",
     }),
     (req, res) => {
         // Google থেকে পাওয়া user
@@ -31,7 +31,7 @@ router.get("/google/callback",
         );
 
         // Token সহ redirect
-        res.redirect(`https://gadget-review-y7lm.vercel.app/?token=${token}`);
+        res.redirect(`https://www.adcashbd.xyz/?token=${token}`);
     }
 );
 
@@ -54,7 +54,7 @@ router.get("/logout", (req, res) => {
         if (err) {
             return res.status(500).json({ message: "Logout Error", err });
         }
-        res.redirect("https://gadget-review-y7lm.vercel.app");
+        res.redirect("https://www.adcashbd.xyz");
     });
 });
 
