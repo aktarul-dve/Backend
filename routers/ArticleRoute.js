@@ -7,9 +7,9 @@ const router = express.Router();
 // নতুন প্রশ্ন তৈরি (admin use)
 router.post("/newArticle", async (req, res) => {
   try {
-    const { text, reward  } = req.body;
+    const { Title, Description  } = req.body;
 
-    const newarticle = new Article({ text, reward });
+    const newarticle = new Article({ Title, Description });
     await newarticle.save();
 
     res.status(201).json({ success: true, article: newarticle });
