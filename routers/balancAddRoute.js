@@ -7,7 +7,7 @@ const router = express.Router();
 
 // ইউজারের balance update করা
 // Update Balance (in taka/poisha)
-router.put("/balance", authMiddleware, countdown, async (req, res) => {
+router.put("/balance", authMiddleware,  async (req, res) => {
   try {
     const { amount } = req.body; // যেমন 0.30, 0.20
 
@@ -22,13 +22,12 @@ router.put("/balance", authMiddleware, countdown, async (req, res) => {
     if (!user) return res.status(404).json({ message: "User not found" });
 
     user.balance += amountInPoisha;
-    user.lastCompletedTime = Date.now(); // এখানে সময় সেট করা হলো
     await user.save();
 
     res.json({
       message: "Balance updated",
       balance: (user.balance / 100).toFixed(2), // টাকা আকারে ফেরত দিবো
-      nextAvailable: new Date(Date.now() + 4 * 60 * 60 * 1000), // কখন আবার কাজ করতে পারবে
+      
     });
   } catch (err) {
     res.status(500).json({ message: "Server error", error: err.message });

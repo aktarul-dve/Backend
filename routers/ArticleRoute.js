@@ -1,6 +1,6 @@
 // routes/questionRoutes.js
 const express = require("express");
-const WatchAds = require("../models/watchAdsModel");
+const Article = require("../models/ArticleModel");
 
 const router = express.Router();
 
@@ -9,19 +9,19 @@ router.post("/wathchAds", async (req, res) => {
   try {
     const { text, reward  } = req.body;
 
-    const newWathchAds = new WatchAds({ text, reward });
-    await newWathchAds.save();
+    const newarticle = new Article({ text, reward });
+    await newarticle.save();
 
-    res.status(201).json({ success: true, wathchAds: newWathchAds });
+    res.status(201).json({ success: true, article: newarticle });
   } catch (err) {
     res.status(500).json({ success: false, message: "Server Error", err });
   }
 });
 
-router.get("/allWatchAds", async (req, res) => {
+router.get("/allarticle", async (req, res) => {
   try {
-    const watchAds = await WatchAds.find();
-    res.status(200).json({ success: true, watchAds });
+    const article = await Article.find();
+    res.status(200).json({ success: true, article });
   } catch (err) {
     res.status(500).json({ success: false, message: "Server Error", err });
   }

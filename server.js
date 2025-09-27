@@ -8,12 +8,13 @@ const googleStrategy = require("passport-google-oauth20").Strategy;
 const authRoutes = require("./routers/googleAouthLogin"); 
 const QuestionRoutes = require("./routers/QuestionRoute"); 
 const balance = require ("./routers/balancAddRoute") 
-const watchAds = require ("./routers/watchAdsRoute") 
+const articles = require ("./routers/ArticleRoute") 
 const BanglaQuiz = require ("./routers/BanglaQuizRoute") 
 const MathQuiz = require ("./routers/MathQuizRoute") 
 const EnglishQuiz = require ("./routers/EnglishQuizRoute") 
 const withdrawRoutes = require ("./routers/withdrawRoutes")
 const jobRoutes = require("./routers/jobRoutes");
+const UserAction = require("./routers/UserActionRoute");
 const User = require("./models/User");
 const connectDB = require ('./config/db');
 
@@ -114,7 +115,7 @@ passport.deserializeUser(async (id, done) => {
 app.use("/auth", authRoutes);
 app.use("/", QuestionRoutes );
 app.use("/reward", balance );
-app.use("/ads", watchAds );
+app.use("/article", articles );
 app.use("/bangla", BanglaQuiz);
 app.use("/english", EnglishQuiz);
 app.use("/math", MathQuiz);
@@ -123,6 +124,12 @@ app.use("/math", MathQuiz);
 app.use("/withdraw", withdrawRoutes);
 
 app.use("/api/job", jobRoutes);
+
+
+app.use("/action", UserAction);
+
+
+
 
 
 
