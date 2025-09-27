@@ -5,7 +5,7 @@ const Article = require("../models/ArticleModel");
 const router = express.Router();
 
 // নতুন প্রশ্ন তৈরি (admin use)
-router.post("/article", async (req, res) => {
+router.post("/newArticle", async (req, res) => {
   try {
     const { text, reward  } = req.body;
 
