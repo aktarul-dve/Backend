@@ -62,12 +62,14 @@ router.get("/logout", (req, res) => {
 // Profile API
 router.get("/profile", authMiddleware, (req, res) => {
   res.json({
-    id: req.user._id,
+     id: req.user._id,
     name: req.user.name,
     email: req.user.email,
     photo: req.user.photo,
     balance: req.user.balance,
     referCode: req.user.referCode,
+    actionCount: req.user.actionCount,      // 🔹 Add this
+    lastRewardTime: req.user.lastRewardTime
   });
 });
 
