@@ -1,15 +1,41 @@
 // routes/questionRoutes.js
 const express = require("express");
 const Article = require("../models/ArticleModel");
+import { v2 as cloudinary } from 'cloudinary';
 
 const router = express.Router();
 
 // নতুন প্রশ্ন তৈরি (admin use)
 router.post("/newArticle", async (req, res) => {
   try {
-    const { Title, Description  } = req.body;
 
-    const newarticle = new Article({ Title, Description });
+    if (!req.files || Object.keys(req.files).length === 0) {
+      console.log("no image");
+      return res.status(400).json({ message: "User photo is required" });
+    }
+
+    const { photo } = req.files;
+    const allowedFormats = ["image/jpeg", "image/png", "image/webp"];
+    if (!allowedFormats.includes(photo.mimetype)) {
+      return res.status(400).json({ message: "Invalid photo format. Only jpg and png are allowed" });
+    }
+    const { Title, Description } = req.body;
+
+    const cloudinaryResponse = await cloudinary.uploader.upload(photo.tempFilePath);
+
+    if (!cloudinaryResponse || cloudinaryResponse.error) {
+      console.log(cloudinaryResponse.error);
+      return res.status(500).json({ message: "Error uploading photo" });
+    }
+
+    const newarticle = new Article({
+      Title,
+      Description,
+      photo: {
+        public_id: cloudinaryResponse.public_id,
+        url: cloudinaryResponse.url,
+      }
+    });
     await newarticle.save();
 
     res.status(201).json({ success: true, article: newarticle });
