@@ -24,13 +24,12 @@ router.post("/count", auth, async (req, res) => {
     const io = req.app.get("io");
     io.emit("user_update", {
       userId: user._id.toString(),
-      updatedFields: { actionCount: user.actionCount, balance: user.balance }
+      updatedFields: { actionCount: user.actionCount, }
     });
 
     res.json({
       success: true,
       rewardTriggered,
-      balance: user.balance,
       actionCount: user.actionCount
     });
 
