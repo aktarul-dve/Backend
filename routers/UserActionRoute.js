@@ -1,28 +1,31 @@
-// routes/action.js
 const express = require("express");
 const router = express.Router();
 const auth = require("../middleware/auth");
 const User = require("../models/User");
 
-// প্রতিটি action hit
 router.post("/count", auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
 
-    // Action count বাড়াও
+    // Increase actionCount
     user.actionCount += 1;
 
     let rewardTriggered = false;
 
-    // 10 action হলে reward trigger
     if (user.actionCount >= 10) {
       rewardTriggered = true;
-      user.balance += 50; // reward টাকা
-      user.actionCount = 0; // reset counter
+      user.actionCount = 0;
       user.lastRewardTime = new Date();
     }
 
     await user.save();
+
+    // 🔹 Emit via Socket.io
+    const io = req.app.get("io");
+    io.emit("user_update", {
+      userId: user._id.toString(),
+      updatedFields: { actionCount: user.actionCount, balance: user.balance }
+    });
 
     res.json({
       success: true,
@@ -30,7 +33,9 @@ router.post("/count", auth, async (req, res) => {
       balance: user.balance,
       actionCount: user.actionCount
     });
+
   } catch (err) {
+    console.error(err);
     res.status(500).json({ success: false, msg: "Server error" });
   }
 });
