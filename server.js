@@ -122,28 +122,25 @@ app.use("/withdraw", withdrawRoutes);
 app.use("/api/job", jobRoutes);
 app.use("/action", UserAction);
 
-// --- HTTP Server & Socket.io ---
+// --- HTTP & Socket.io ---
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: ['https://www.adcashbd.xyz', 'http://localhost:5173'],
-    credentials: true,
-  },
+    origin: ['http://localhost:5173', 'https://www.adcashbd.xyz'],
+    credentials: true
+  }
 });
 
+// Make io accessible in routes
 app.set("io", io);
 
 io.on("connection", (socket) => {
   console.log("New client connected:", socket.id);
 
-  // Listen to user_update events from clients
-  socket.on("user_update", async ({ userId, updatedFields }) => {
-    try {
-      const user = await User.findByIdAndUpdate(userId, updatedFields, { new: true });
-      io.emit("user_update", { userId, updatedFields: user }); // broadcast to all clients
-    } catch (err) {
-      console.error("Socket user_update error:", err);
-    }
+  // Join user-specific room
+  socket.on("join_user_room", (userId) => {
+    socket.join(userId);
+    console.log(`Socket ${socket.id} joined room: ${userId}`);
   });
 
   socket.on("disconnect", () => {
@@ -151,7 +148,6 @@ io.on("connection", (socket) => {
   });
 });
 
-// --- Start Server ---
 server.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
