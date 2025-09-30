@@ -11,7 +11,7 @@ const fileUpload = require("express-fileupload");
 // Routes
 const authRoutes = require("./routers/googleAouthLogin");
 const QuestionRoutes = require("./routers/QuestionRoute");
-const balanceRoutes = require("./routers/balanceRoutes");
+const balanceRoutes = require("./routers/balancAddRoute");
 const articlesRoutes = require("./routers/ArticleRoute");
 const BanglaQuizRoutes = require("./routers/BanglaQuizRoute");
 const MathQuizRoutes = require("./routers/MathQuizRoute");
