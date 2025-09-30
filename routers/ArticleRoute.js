@@ -1,7 +1,8 @@
 // routes/questionRoutes.js
 const express = require("express");
 const Article = require("../models/ArticleModel");
-import { v2 as cloudinary } from 'cloudinary';
+const { v2: cloudinary } = require('cloudinary');
+
 
 const router = express.Router();
 
