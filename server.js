@@ -1,30 +1,30 @@
-// server.js
-import express from "express";
-import dotenv from "dotenv";
-import cors from "cors";
-import cookieParser from "cookie-parser";
-import session from "express-session";
-import passport from "passport";
-import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import { v2 as cloudinary } from "cloudinary";
-import fileUpload from "express-fileupload";
+const express = require("express");
+const dotenv = require("dotenv");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
+const passport = require("passport");
+const { Strategy: GoogleStrategy } = require("passport-google-oauth20");
+const { v2: cloudinary } = require("cloudinary");
+const fileUpload = require("express-fileupload");
 
 // Routes
-import authRoutes from "./routers/googleAouthLogin.js";
-import QuestionRoutes from "./routers/QuestionRoute.js";
-import balanceRoutes from "./routers/balancAddRoute.js";
-import articlesRoutes from "./routers/ArticleRoute.js";
-import BanglaQuizRoutes from "./routers/BanglaQuizRoute.js";
-import MathQuizRoutes from "./routers/MathQuizRoute.js";
-import EnglishQuizRoutes from "./routers/EnglishQuizRoute.js";
-import withdrawRoutes from "./routers/withdrawRoutes.js";
-import jobRoutes from "./routers/jobRoutes.js";
+const authRoutes = require("./routers/googleAouthLogin");
+const QuestionRoutes = require("./routers/QuestionRoute");
+const balanceRoutes = require("./routers/balanceRoutes");
+const articlesRoutes = require("./routers/ArticleRoute");
+const BanglaQuizRoutes = require("./routers/BanglaQuizRoute");
+const MathQuizRoutes = require("./routers/MathQuizRoute");
+const EnglishQuizRoutes = require("./routers/EnglishQuizRoute");
+const withdrawRoutes = require("./routers/withdrawRoutes");
+const jobRoutes = require("./routers/jobRoutes");
 
 // Models & DB
-import User from "./models/User.js";
-import connectDB from "./config/db.js";
+const User = require("./models/User");
+const connectDB = require("./config/db");
 
 dotenv.config();
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
